@@ -6,8 +6,6 @@
 #include "myRGB.h"
 #include "evolve.h"
 
-using namespace modelName;
-
 class cellularAutomaton : public QMainWindow
 {
 	Q_OBJECT

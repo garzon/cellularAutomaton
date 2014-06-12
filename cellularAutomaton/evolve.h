@@ -3,9 +3,6 @@
 
 #include "neighborhood.h"
 
-namespace forestFire{
-	void evolveCell(Cell &c,const Neighborhood & n);
-
-}
+void evolveCell(Cell &c,const Neighborhood & n);
 
 #endif

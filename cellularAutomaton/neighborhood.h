@@ -6,7 +6,6 @@
 #include <algorithm>
 #include "cell.h"
 using namespace std;
-using namespace modelName;
 
 class Neighborhood{
 public:

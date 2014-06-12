@@ -82,7 +82,7 @@ void cellularAutomaton::step(){
 			Cell c(displayImage->pixel(x,y));
 			Neighborhood n(*displayImage,x,y);
 			evolveCell(c,n);
-			image->setPixel(x,y,mapColor[c.s]);
+			image->setPixel(x,y,mapColor[c.stat]);
 		}
 	}
 	delete displayImage;
@@ -91,6 +91,6 @@ void cellularAutomaton::step(){
 }
 
 void cellularAutomaton::autoMode(){
-
+	// TODO
 }
 

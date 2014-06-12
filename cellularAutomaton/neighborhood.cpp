@@ -16,7 +16,7 @@ Neighborhood::Neighborhood(const QImage &map,long x,long y){
 	for(p=0;p<numOfStatus;p++)
 		stat[(status)p]=0;
 	for(p=0;p<neighborList.size();p++)
-		stat[neighborList[p].s]++;
+		stat[neighborList[p].stat]++;
 }
 
 inline long Neighborhood::prev(long x,long xmax,long xmin){
