@@ -80,7 +80,7 @@ void cellularAutomaton::step(){
 	REP(x,w){
 		REP(y,h){
 			Cell c(displayImage->pixel(x,y));
-			CellNeighborhood n(*displayImage,x,y);
+			Neighborhood n(*displayImage,x,y);
 			evolveCell(c,n);
 			image->setPixel(x,y,mapColor[c.s]);
 		}

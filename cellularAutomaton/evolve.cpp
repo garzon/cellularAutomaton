@@ -1,6 +1,13 @@
 #include "evolve.h"
 
-void evolveCell(Cell &c,const CellNeighborhood & n){
+namespace forestFire{
+
+static const long   fire2ground=30,
+					ground2tree=10,
+					tree2fire=3,
+					firetree=25;
+
+void evolveCell(Cell &c,const Neighborhood & n){
 	if(c.s==fire){
 		if(rand()%100<fire2ground){
 			c.s=ground;
@@ -26,3 +33,9 @@ void evolveCell(Cell &c,const CellNeighborhood & n){
 		}
 	}
 }
+
+
+}; // namespace forestFire
+
+
+using namespace modelName;

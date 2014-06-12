@@ -260,7 +260,7 @@
     <ClInclude Include="evolve.h" />
     <ClInclude Include="myRGB.h" />
     <ClInclude Include="neighborhood.h" />
-    <ClInclude Include="treeCell.h" />
+    <ClInclude Include="cell.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

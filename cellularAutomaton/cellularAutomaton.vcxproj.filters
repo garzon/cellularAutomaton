@@ -75,13 +75,13 @@
     <ClInclude Include="neighborhood.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="treeCell.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="myRGB.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="evolve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

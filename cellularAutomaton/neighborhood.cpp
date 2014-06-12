@@ -1,6 +1,6 @@
 #include "neighborhood.h"
 
-CellNeighborhood::CellNeighborhood(const QImage &map,long x,long y){
+Neighborhood::Neighborhood(const QImage &map,long x,long y){
 	long w=map.width(),h=map.height();
 	neighborList.push_back(Cell(map.pixel(prev(x,w),y)));
 	neighborList.push_back(Cell(map.pixel(next(x,w),y)));
@@ -19,12 +19,12 @@ CellNeighborhood::CellNeighborhood(const QImage &map,long x,long y){
 		stat[neighborList[p].s]++;
 }
 
-inline long CellNeighborhood::prev(long x,long xmax,long xmin){
+inline long Neighborhood::prev(long x,long xmax,long xmin){
 	long res=x-1;
 	if(res<xmin) res=xmax-1;
 	return res;
 }
-inline long CellNeighborhood::next(long x,long xmax,long xmin){
+inline long Neighborhood::next(long x,long xmax,long xmin){
 	long res=x+1;
 	if(res==xmax) res=xmin;
 	return res;
