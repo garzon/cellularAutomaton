@@ -26,6 +26,7 @@ You JUST need to modify two files, cell.h & evolve.cpp.
 - "enum status" decides all possible status a cell may has
 - "numOfStatus" decides the number of all possible status
 - "isNeighborSurrounded" decide the shape of neighborhood (8 for true and 4 for false)
+- "initStatusPossibility" decides the initial density (%) of the cell in different status
 
 ### evolve.cpp:
 - add "#if modelName == YOURMODELNAME", copy the function evolveCell(Cell,Neighborhood) and paste and modify, add "#endif"
@@ -33,7 +34,7 @@ You JUST need to modify two files, cell.h & evolve.cpp.
 #### Function evolveCell(Cell &c,const Neighborhood &n)
 - All you need to do in this function is to set the next status of the Cell &c, according to the Neighborhood &n.
 - "enum status c.stat": the status of the cell
-- "n.stat.find(X)->second": the number of neighbors in the status X
+- "n.stat[X]": the number of neighbors in the status X
 
 
 
