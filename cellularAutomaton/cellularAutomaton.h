@@ -5,6 +5,7 @@
 #include "ui_cellularAutomaton.h"
 #include "myRGB.h"
 #include "evolve.h"
+#include <qtimer.h>
 
 class cellularAutomaton : public QMainWindow
 {
@@ -15,8 +16,8 @@ public:
 	~cellularAutomaton();
 	QImage *image,*displayImage,*echo;
 	void updateImage();
+	void updateStatus(Neighborhood &n);
 	static const long w=50,h=50;
-
 public slots:
 	void generate();
 	void step();
@@ -24,7 +25,7 @@ public slots:
 private:
 	Ui::cellularAutomatonClass ui;
 	bool _isLoaded,_isAutoMode;
-	
+	long _generation;
 };
 
 #endif // CELLULARAUTOMATON_H

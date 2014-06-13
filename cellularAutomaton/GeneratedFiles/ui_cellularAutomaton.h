@@ -19,6 +19,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
@@ -38,8 +39,13 @@ public:
     QSpacerItem *verticalSpacer_2;
     QPushButton *btnGenerate;
     QSpacerItem *verticalSpacer;
+    QLabel *label_2;
     QPushButton *btnStep;
     QPushButton *btnAuto;
+    QLabel *label_3;
+    QSlider *speedSlider;
+    QSpacerItem *verticalSpacer_4;
+    QLabel *labelStat;
     QSpacerItem *verticalSpacer_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
@@ -84,6 +90,12 @@ public:
 
         verticalLayout->addItem(verticalSpacer);
 
+        label_2 = new QLabel(horizontalLayoutWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setAlignment(Qt::AlignCenter);
+
+        verticalLayout->addWidget(label_2);
+
         btnStep = new QPushButton(horizontalLayoutWidget);
         btnStep->setObjectName(QStringLiteral("btnStep"));
         btnStep->setEnabled(false);
@@ -95,6 +107,36 @@ public:
         btnAuto->setEnabled(false);
 
         verticalLayout->addWidget(btnAuto);
+
+        label_3 = new QLabel(horizontalLayoutWidget);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setAlignment(Qt::AlignCenter);
+
+        verticalLayout->addWidget(label_3);
+
+        speedSlider = new QSlider(horizontalLayoutWidget);
+        speedSlider->setObjectName(QStringLiteral("speedSlider"));
+        speedSlider->setEnabled(false);
+        speedSlider->setMinimum(100);
+        speedSlider->setMaximum(2000);
+        speedSlider->setSingleStep(100);
+        speedSlider->setPageStep(200);
+        speedSlider->setValue(500);
+        speedSlider->setOrientation(Qt::Horizontal);
+        speedSlider->setInvertedAppearance(true);
+        speedSlider->setInvertedControls(false);
+
+        verticalLayout->addWidget(speedSlider);
+
+        verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer_4);
+
+        labelStat = new QLabel(horizontalLayoutWidget);
+        labelStat->setObjectName(QStringLiteral("labelStat"));
+        labelStat->setAlignment(Qt::AlignCenter);
+
+        verticalLayout->addWidget(labelStat);
 
         verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -128,8 +170,11 @@ public:
         cellularAutomatonClass->setWindowTitle(QApplication::translate("cellularAutomatonClass", "cellularAutomaton", 0));
         label->setText(QString());
         btnGenerate->setText(QApplication::translate("cellularAutomatonClass", "Generate", 0));
+        label_2->setText(QApplication::translate("cellularAutomatonClass", "Generation 0", 0));
         btnStep->setText(QApplication::translate("cellularAutomatonClass", "Step", 0));
         btnAuto->setText(QApplication::translate("cellularAutomatonClass", "Auto", 0));
+        label_3->setText(QApplication::translate("cellularAutomatonClass", "Speed:", 0));
+        labelStat->setText(QApplication::translate("cellularAutomatonClass", "Stat:", 0));
     } // retranslateUi
 
 };

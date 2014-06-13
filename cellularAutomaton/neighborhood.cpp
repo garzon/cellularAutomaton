@@ -1,5 +1,18 @@
 #include "neighborhood.h"
 
+Neighborhood::Neighborhood(){
+	long p;
+	for(p=0;p<numOfStatus;p++)
+		stat[(status)p]=0;
+}
+
+Neighborhood &  Neighborhood::operator +=(Neighborhood &n){
+	long p;
+	for(p=0;p<numOfStatus;p++)
+		stat[(status)p]+=n.stat[(status)p];
+	return *this;
+}
+
 Neighborhood::Neighborhood(const QImage &map,long x,long y){
 	long w=map.width(),h=map.height();
 	neighborList.push_back(Cell(map.pixel(prev(x,w),y)));

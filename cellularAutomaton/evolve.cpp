@@ -2,35 +2,29 @@
 
 #if modelName == forestFire
 
-	static const long   fire2ground=30,
-						ground2tree=10,
-						tree2fire=3,
-						firetree=25;
+	static const long
+		burnup=20,
+		ground2tree=10,
+		tree2fire=1;
 
-	void evolveCell(Cell &c,const Neighborhood & n){
+	void evolveCell(Cell &c,Neighborhood & n){
+		long i;
 		if(c.stat==fire){
-			if(rand()%100<fire2ground){
-				c.stat=ground;
-				return;
-			}
+			if(n.stat[tree]==0) c.stat=ground; // Nothing to be burned and die out
+			return;
 		}
 		if(c.stat==ground){
-			if((n.stat.find(tree)->second)==0) return;
-			if(rand()%100<ground2tree){
-				c.stat=tree;
-				return;
-			}
+			REP(i,n.stat[tree])
+				if(rand()%100<ground2tree) c.stat=tree; // seeds grow up
+			return;
 		}
 		if(c.stat==tree){
-			if(rand()%100<tree2fire){
-				c.stat=fire;
+			if(rand()%100<tree2fire){   
+				c.stat=fire;            // the trees light up
 				return;
 			}
-			if((n.stat.find(fire)->second)==0) return;
-			if(rand()%100<firetree){
-				c.stat=fire;
-				return;
-			}
+			REP(i,n.stat[fire])
+				if(rand()%100<burnup) c.stat=fire; // the trees burn up
 		}
 	}
 
@@ -39,18 +33,11 @@
 
 #if modelName == conwaysGameOfLife
 
-	void evolveCell(Cell &c,const Neighborhood & n){
-		long neighbor=n.stat.find(live)->second;
-		if(c.stat==live){
-			if(neighbor==2) return;
-			if(neighbor==3) return;
-			c.stat=dead;
-			return;
-		}
-		if(c.stat==dead){
-			if(neighbor==3) c.stat=live;
-			return;
-		}
+	void evolveCell(Cell &c,Neighborhood & n){
+		long neighbor=n.stat[alive];
+		if(neighbor==3){ c.stat=alive; return; }
+		if(neighbor==2) return;
+		c.stat=dead;
 	}
 
 #endif

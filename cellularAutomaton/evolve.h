@@ -3,6 +3,6 @@
 
 #include "neighborhood.h"
 
-void evolveCell(Cell &c,const Neighborhood & n);
+void evolveCell(Cell &c,Neighborhood & n);
 
 #endif

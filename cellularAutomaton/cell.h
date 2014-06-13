@@ -13,7 +13,7 @@
 
 #define forestFire 1
 #define conwaysGameOfLife 2
-#define modelName 1
+#define modelName 2
 
 // The macro modelName decides what model is going to run 
 
@@ -21,20 +21,22 @@
 
 #if modelName == forestFire
 
-static const QRgb mapColor[]={qRgb(150,50,0),qRgb(0,255,0),qRgb(255,0,0)};
 static const long numOfStatus=3;
 enum status{ ground,tree,fire };
+static const long initStatusPossibility[]={80,20,0};
 static const bool isNeighborSurrounded=true;
+static const QRgb mapColor[]={qRgb(120,20,0),qRgb(0,255,0),qRgb(255,0,0)};
 
 #endif
 // forestFire
 
 #if modelName == conwaysGameOfLife
 
-static const QRgb mapColor[]={qRgb(0,0,0),qRgb(255,255,255)};
 static const long numOfStatus=2;
-enum status{ dead,live };
+enum status{ dead,alive };
+static const long initStatusPossibility[]={80,20};
 static const bool isNeighborSurrounded=true;
+static const QRgb mapColor[]={qRgb(0,0,0),qRgb(255,255,255)};
 
 #endif
 // conwaysGameOfLife
