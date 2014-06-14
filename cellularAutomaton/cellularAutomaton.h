@@ -2,10 +2,12 @@
 #define CELLULARAUTOMATON_H
 
 #include <QtWidgets/QMainWindow>
+#include <qtimer.h>
+#include <qfiledialog.h>
+#include <qmessagebox.h>
 #include "ui_cellularAutomaton.h"
 #include "myRGB.h"
 #include "evolve.h"
-#include <qtimer.h>
 
 class cellularAutomaton : public QMainWindow
 {
@@ -22,10 +24,15 @@ public slots:
 	void generate();
 	void step();
 	void autoMode();
+	void loadImage();
+	void saveImage();
 private:
 	Ui::cellularAutomatonClass ui;
 	bool _isLoaded,_isAutoMode;
 	long _generation;
+	void _clean();
+	void _init();
+	void _initEnd();
 };
 
 #endif // CELLULARAUTOMATON_H

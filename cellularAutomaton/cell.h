@@ -13,7 +13,8 @@
 
 #define forestFire 1
 #define conwaysGameOfLife 2
-#define modelName 2
+#define oddOrEven 3
+#define modelName 3
 
 // The macro modelName decides what model is going to run 
 
@@ -40,6 +41,17 @@ static const QRgb mapColor[]={qRgb(0,0,0),qRgb(255,255,255)};
 
 #endif
 // conwaysGameOfLife
+
+#if modelName == oddOrEven
+
+static const long numOfStatus=2;
+enum status{ dead,alive };
+static const long initStatusPossibility[]={50,50};
+static const bool isNeighborSurrounded=false; // von.Neumann's neighbor
+static const QRgb mapColor[]={qRgb(0,0,0),qRgb(255,255,255)};
+
+#endif 
+// oddOrEven
 
 class Cell{
 public:

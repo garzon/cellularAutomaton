@@ -23,7 +23,7 @@ Neighborhood::Neighborhood(const QImage &map,long x,long y){
 		neighborList.push_back(Cell(map.pixel(prev(x,w),prev(y,h))));
 		neighborList.push_back(Cell(map.pixel(prev(x,w),next(y,h))));
 		neighborList.push_back(Cell(map.pixel(next(x,w),prev(y,h))));
-		neighborList.push_back(Cell(map.pixel(next(x,w),prev(y,h))));
+		neighborList.push_back(Cell(map.pixel(next(x,w),next(y,h))));
 	}
 	long p;
 	for(p=0;p<numOfStatus;p++)

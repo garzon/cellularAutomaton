@@ -42,3 +42,12 @@
 
 #endif
 // conwaysGameOfLife
+
+#if modelName == oddOrEven
+
+	void evolveCell(Cell &c,Neighborhood & n){
+		c.stat=(status)(n.stat[alive]&1);
+	}
+
+#endif
+// oddOrEven

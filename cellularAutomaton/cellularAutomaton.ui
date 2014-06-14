@@ -69,6 +69,23 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Load Image...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnSave">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Save Image...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -225,8 +242,8 @@
    <slot>generate()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>576</x>
-     <y>195</y>
+     <x>617</x>
+     <y>138</y>
     </hint>
     <hint type="destinationlabel">
      <x>570</x>
@@ -241,8 +258,8 @@
    <slot>step()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>573</x>
-     <y>364</y>
+     <x>617</x>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
      <x>578</x>
@@ -258,11 +275,43 @@
    <hints>
     <hint type="sourcelabel">
      <x>617</x>
-     <y>414</y>
+     <y>343</y>
     </hint>
     <hint type="destinationlabel">
      <x>609</x>
      <y>454</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>cellularAutomatonClass</receiver>
+   <slot>loadImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>567</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>545</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnSave</sender>
+   <signal>clicked()</signal>
+   <receiver>cellularAutomatonClass</receiver>
+   <slot>saveImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>592</x>
+     <y>189</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>591</x>
+     <y>239</y>
     </hint>
    </hints>
   </connection>
@@ -271,5 +320,7 @@
   <slot>generate()</slot>
   <slot>step()</slot>
   <slot>autoMode()</slot>
+  <slot>loadImage()</slot>
+  <slot>saveImage()</slot>
  </slots>
 </ui>

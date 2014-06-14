@@ -2,26 +2,6 @@
 
 #define REP(i,n) for(i=0;i<n;i++)
 
-// --------------- CONSTRUCTORS -------------------
-
-cellularAutomaton::cellularAutomaton(QWidget *parent)
-	: QMainWindow(parent)
-{
-	ui.setupUi(this);
-	srand(time(0));
-	_isLoaded=false;
-	_isAutoMode=false;
-}
-
-cellularAutomaton::~cellularAutomaton()
-{
-	if(_isLoaded){
-		delete image;
-		delete displayImage;
-		delete echo;
-	}
-}
-
 // ------------------ HELPERS -----------------------
 
 QImage * transform(QImage * const image,double zoom){
@@ -46,6 +26,36 @@ QImage * transform(QImage * const image,double zoom){
 
 // -------------- MEMBER FUNCTIONS ------------------
 
+void cellularAutomaton::_clean(){
+	if(_isLoaded){
+		delete image;
+		delete displayImage;
+		delete echo;
+		_isLoaded=false;
+		ui.btnAuto->setEnabled(false);
+		ui.btnStep->setEnabled(false);
+		ui.btnAuto->setEnabled(false);
+		ui.btnSave->setEnabled(false);
+	}
+}
+
+void cellularAutomaton::_init(){
+	_clean();
+	ui.btnAuto->setEnabled(true);
+	ui.btnStep->setEnabled(true);
+	ui.btnSave->setEnabled(true);
+	image=new QImage(w,h,QImage::Format::Format_RGB32);
+}
+
+void cellularAutomaton::_initEnd(){
+	displayImage=new QImage(*image);
+	echo=new QImage(1,1,QImage::Format::Format_RGB32);
+	_generation=0;
+	ui.labelStat->setText("Stat:");
+	updateImage();
+	_isLoaded=true;
+}
+
 void cellularAutomaton::updateImage(){
 	ui.label_2->setText(QString("Generation %1").arg(_generation));
 	delete echo;
@@ -68,14 +78,7 @@ void cellularAutomaton::updateStatus(Neighborhood &n){
 // -------------- SLOTS -------------------
 
 void cellularAutomaton::generate(){
-	ui.btnAuto->setEnabled(true);
-	ui.btnStep->setEnabled(true);
-	if(_isLoaded){
-		delete image;
-		delete displayImage;
-		delete echo;
-	}
-	image=new QImage(w,h,QImage::Format::Format_RGB32);
+	_init();
 	long x,y;
 	REP(x,w){
 		REP(y,h){
@@ -89,11 +92,53 @@ void cellularAutomaton::generate(){
 			}
 		}
 	}
-	displayImage=new QImage(*image);
-	echo=new QImage(1,1,QImage::Format::Format_RGB32);
-	_generation=0;
-	updateImage();
-	_isLoaded=true;
+	_initEnd();
+}
+
+void cellularAutomaton::loadImage(){
+	_clean();
+	QImage tmp(QFileDialog::getOpenFileName());
+	if((tmp.width()<w)||(tmp.width()<h)){
+		QMessageBox::warning(this,"Error","The image must bigger than the sandbox.",QMessageBox::StandardButton::Cancel);
+		return;
+	}
+	_init();
+	long x,y; double delta=255.0/numOfStatus,now; int gray,p;
+	REP(x,w){
+		REP(y,h){
+			now=delta;
+			gray=myRGB::toGray(tmp.pixel(x,y));p=0;
+			while(true){
+				if(gray<=now){
+					if(p>=numOfStatus) p=numOfStatus-1;
+					image->setPixel(x,y,mapColor[p]);
+					break;
+				}
+				p++;
+				now+=delta;
+			}
+		}
+	}
+	_initEnd();
+}
+
+void cellularAutomaton::saveImage(){
+	QImage tmp(*image);
+	long x,y,z; double delta=255.0/numOfStatus,now; int gray;
+	REP(x,w){
+		REP(y,h){
+			now=delta*0.5;
+			REP(z,numOfStatus){
+				if(((status)z)==Cell(image->pixel(x,y)).stat){
+					int ttmp=(int)now;
+					tmp.setPixel(x,y,qRgb(now,now,now));
+					break;
+				}
+				now+=delta;
+			}
+		}
+	}
+	tmp.save(QFileDialog::getSaveFileName());
 }
 
 void cellularAutomaton::step(){
@@ -131,3 +176,18 @@ void cellularAutomaton::autoMode(){
 	}
 }
 
+// --------------- CONSTRUCTORS -------------------
+
+cellularAutomaton::cellularAutomaton(QWidget *parent)
+	: QMainWindow(parent)
+{
+	ui.setupUi(this);
+	srand(time(0));
+	_isLoaded=false;
+	_isAutoMode=false;
+}
+
+cellularAutomaton::~cellularAutomaton()
+{
+	_clean();
+}

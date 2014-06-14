@@ -38,6 +38,8 @@ public:
     QVBoxLayout *verticalLayout;
     QSpacerItem *verticalSpacer_2;
     QPushButton *btnGenerate;
+    QPushButton *pushButton;
+    QPushButton *btnSave;
     QSpacerItem *verticalSpacer;
     QLabel *label_2;
     QPushButton *btnStep;
@@ -85,6 +87,17 @@ public:
         btnGenerate->setObjectName(QStringLiteral("btnGenerate"));
 
         verticalLayout->addWidget(btnGenerate);
+
+        pushButton = new QPushButton(horizontalLayoutWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        verticalLayout->addWidget(pushButton);
+
+        btnSave = new QPushButton(horizontalLayoutWidget);
+        btnSave->setObjectName(QStringLiteral("btnSave"));
+        btnSave->setEnabled(false);
+
+        verticalLayout->addWidget(btnSave);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -161,6 +174,8 @@ public:
         QObject::connect(btnGenerate, SIGNAL(clicked()), cellularAutomatonClass, SLOT(generate()));
         QObject::connect(btnStep, SIGNAL(clicked()), cellularAutomatonClass, SLOT(step()));
         QObject::connect(btnAuto, SIGNAL(clicked()), cellularAutomatonClass, SLOT(autoMode()));
+        QObject::connect(pushButton, SIGNAL(clicked()), cellularAutomatonClass, SLOT(loadImage()));
+        QObject::connect(btnSave, SIGNAL(clicked()), cellularAutomatonClass, SLOT(saveImage()));
 
         QMetaObject::connectSlotsByName(cellularAutomatonClass);
     } // setupUi
@@ -170,6 +185,8 @@ public:
         cellularAutomatonClass->setWindowTitle(QApplication::translate("cellularAutomatonClass", "cellularAutomaton", 0));
         label->setText(QString());
         btnGenerate->setText(QApplication::translate("cellularAutomatonClass", "Generate", 0));
+        pushButton->setText(QApplication::translate("cellularAutomatonClass", "Load Image...", 0));
+        btnSave->setText(QApplication::translate("cellularAutomatonClass", "Save Image...", 0));
         label_2->setText(QApplication::translate("cellularAutomatonClass", "Generation 0", 0));
         btnStep->setText(QApplication::translate("cellularAutomatonClass", "Step", 0));
         btnAuto->setText(QApplication::translate("cellularAutomatonClass", "Auto", 0));
