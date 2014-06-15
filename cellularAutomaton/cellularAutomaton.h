@@ -19,7 +19,7 @@ public:
 	QImage *image,*displayImage,*echo;
 	void updateImage();
 	void updateStatus(Neighborhood &n);
-	static const long w=50,h=50;
+	static const long w=100,h=100;
 public slots:
 	void generate();
 	void step();

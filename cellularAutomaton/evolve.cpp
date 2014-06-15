@@ -46,8 +46,18 @@
 #if modelName == oddOrEven
 
 	void evolveCell(Cell &c,Neighborhood & n){
-		c.stat=(status)(n.stat[alive]&1);
+		c.stat=(status)(n.stat[odd]&1);
 	}
 
 #endif
 // oddOrEven
+
+#if modelName == edgeDetection
+
+	void evolveCell(Cell &c,Neighborhood & n){
+		if(n.stat[(status)(1-int(c.stat))]) c.stat=border;
+		else c.stat=non_border;
+	}
+
+#endif
+// edgeDetection

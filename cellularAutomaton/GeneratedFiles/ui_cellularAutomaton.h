@@ -130,7 +130,7 @@ public:
         speedSlider = new QSlider(horizontalLayoutWidget);
         speedSlider->setObjectName(QStringLiteral("speedSlider"));
         speedSlider->setEnabled(false);
-        speedSlider->setMinimum(100);
+        speedSlider->setMinimum(50);
         speedSlider->setMaximum(2000);
         speedSlider->setSingleStep(100);
         speedSlider->setPageStep(200);

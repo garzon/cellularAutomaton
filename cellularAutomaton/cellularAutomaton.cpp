@@ -24,6 +24,11 @@ QImage * transform(QImage * const image,double zoom){
 	return res;
 }
 
+template <typename T>
+inline T imin(const T &a,const T &b){
+	if(a<b) return a; else return b;
+}
+
 // -------------- MEMBER FUNCTIONS ------------------
 
 void cellularAutomaton::_clean(){
@@ -97,28 +102,68 @@ void cellularAutomaton::generate(){
 
 void cellularAutomaton::loadImage(){
 	_clean();
-	QImage tmp(QFileDialog::getOpenFileName());
+	QImage *tttmp=new QImage(QFileDialog::getOpenFileName()),
+		   *ttttmp=transform(tttmp,imin(tttmp->width()/(w+1.0),tttmp->height()/(h+1.0)));
+	QImage tmp=*ttttmp; delete ttttmp;
 	if((tmp.width()<w)||(tmp.width()<h)){
 		QMessageBox::warning(this,"Error","The image must bigger than the sandbox.",QMessageBox::StandardButton::Cancel);
 		return;
 	}
 	_init();
-	long x,y; double delta=255.0/numOfStatus,now; int gray,p;
-	REP(x,w){
-		REP(y,h){
-			now=delta;
-			gray=myRGB::toGray(tmp.pixel(x,y));p=0;
-			while(true){
-				if(gray<=now){
-					if(p>=numOfStatus) p=numOfStatus-1;
-					image->setPixel(x,y,mapColor[p]);
-					break;
+	long x,y,z,t; double delta=255.0/numOfStatus,now; int gray,p; const long n=numOfStatus;
+	myRGB *centerPoint=new myRGB[n];
+	long **arr=new long*[h];
+	for(x=0;x<h;x++){
+		arr[x]=new long[w];
+	}
+	for(x=0;x<n;x++)
+		centerPoint[x].randomize();
+	for(y=0;y<h;y++){
+		for(x=0;x<w;x++){
+			long mindist=999999999,tmpp;
+			for(z=0;z<n;z++){
+				tmpp=centerPoint[z].distance(tmp.pixel(x,y));
+				if(tmpp<mindist){
+					mindist=tmpp;
+					arr[y][x]=z;
 				}
-				p++;
-				now+=delta;
 			}
 		}
 	}
+	long *counter=new long[n];
+	for(t=0;t<50;t++){
+		for(z=0;z<n;z++){ centerPoint[z].clear(); counter[z]=0; }
+		for(y=0;y<h;y++){
+			for(x=0;x<w;x++){
+				counter[arr[y][x]]++;
+				centerPoint[arr[y][x]]+=tmp.pixel(x,y);
+			}
+		}
+		for(z=0;z<n;z++) if(counter[z]) centerPoint[z]/=counter[z]; else centerPoint[z].randomize();
+		for(y=0;y<h;y++){
+			for(x=0;x<w;x++){
+				long mindist=999999999,tmpp;
+				for(z=0;z<n;z++){
+					tmpp=centerPoint[z].distance(tmp.pixel(x,y));
+					if(tmpp<mindist){
+						mindist=tmpp;
+						arr[y][x]=z;
+					}
+				}
+			}
+		}
+	}
+	for(y=0;y<h;y++){
+		for(x=0;x<w;x++){
+			image->setPixel(x,y,mapColor[arr[y][x]]);
+		}
+	}
+	delete [] centerPoint;
+	delete [] counter;
+	for(x=0;x<w;x++){
+		delete [] arr[x];
+	}
+	delete [] arr;
 	_initEnd();
 }
 
@@ -127,15 +172,9 @@ void cellularAutomaton::saveImage(){
 	long x,y,z; double delta=255.0/numOfStatus,now; int gray;
 	REP(x,w){
 		REP(y,h){
-			now=delta*0.5;
-			REP(z,numOfStatus){
-				if(((status)z)==Cell(image->pixel(x,y)).stat){
-					int ttmp=(int)now;
-					tmp.setPixel(x,y,qRgb(now,now,now));
-					break;
-				}
-				now+=delta;
-			}
+			now=delta*(0.5+int(Cell(image->pixel(x,y)).stat));
+			int ttmp=(int)now;
+			tmp.setPixel(x,y,qRgb(now,now,now));
 		}
 	}
 	tmp.save(QFileDialog::getSaveFileName());
@@ -169,9 +208,13 @@ void cellularAutomaton::autoMode(){
 	if(_isAutoMode){
 		ui.btnAuto->setText("Pause");
 		ui.speedSlider->setEnabled(true);
+		ui.btnGenerate->setEnabled(false);
+		ui.pushButton->setEnabled(false);
 		step();
 	}else{
 		ui.speedSlider->setEnabled(false);
+		ui.btnGenerate->setEnabled(true);
+		ui.pushButton->setEnabled(true);
 		ui.btnAuto->setText("Auto");
 	}
 }
