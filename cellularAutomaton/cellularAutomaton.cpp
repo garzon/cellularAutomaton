@@ -106,7 +106,7 @@ void cellularAutomaton::loadImage(){
 		   *ttttmp=transform(tttmp,imin(tttmp->width()/(w+1.0),tttmp->height()/(h+1.0)));
 	QImage tmp=*ttttmp; delete ttttmp;
 	if((tmp.width()<w)||(tmp.width()<h)){
-		QMessageBox::warning(this,"Error","The image must bigger than the sandbox.",QMessageBox::StandardButton::Cancel);
+		//QMessageBox::warning(this,"Error","The image must bigger than the sandbox.",QMessageBox::StandardButton::Cancel);
 		return;
 	}
 	_init();

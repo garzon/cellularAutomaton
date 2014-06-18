@@ -14,9 +14,9 @@
 #define forestFire 1
 #define conwaysGameOfLife 2
 #define oddOrEven 3
-#define edgeDetection 4
+#define edgeSmoothing 4
 
-#define modelName 3
+#define modelName 4
 
 // The macro modelName decides what model is going to run 
 
@@ -55,7 +55,7 @@ static const QRgb mapColor[]={qRgb(0,0,0),qRgb(255,255,255)};
 #endif 
 // oddOrEven
 
-#if modelName == edgeDetection
+#if modelName == edgeSmoothing
 
 static const long numOfStatus=2;
 enum status{ border,non_border };
@@ -64,7 +64,7 @@ static const bool isNeighborSurrounded=false; // von.Neumann's neighbor
 static const QRgb mapColor[]={qRgb(0,0,0),qRgb(255,255,255)};
 
 #endif 
-// edgeDetection
+// edgeSmoothing
 
 class Cell{
 public:

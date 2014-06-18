@@ -52,12 +52,12 @@
 #endif
 // oddOrEven
 
-#if modelName == edgeDetection
+#if modelName == edgeSmoothing
 
 	void evolveCell(Cell &c,Neighborhood & n){
-		if(n.stat[(status)(1-int(c.stat))]) c.stat=border;
-		else c.stat=non_border;
+		if(n.stat[(status)(1-int(c.stat))]>2) c.stat=(status)(1-int(c.stat));
+		//else c.stat=non_border;
 	}
 
 #endif
-// edgeDetection
+// edgeSmoothing
