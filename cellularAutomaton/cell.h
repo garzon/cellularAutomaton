@@ -4,6 +4,7 @@
 #include <qimage.h>
 #include <cstdlib>
 #include <ctime>
+#include <map>
 
 #ifndef REP
 	#define REP(i,n) for(i=0;i<n;i++)
@@ -15,8 +16,9 @@
 #define conwaysGameOfLife 2
 #define oddOrEven 3
 #define edgeSmoothing 4
+#define cellularAutomaton1D 5
 
-#define modelName 4
+#define modelName 5
 
 // The macro modelName decides what model is going to run 
 
@@ -37,9 +39,9 @@ static const QRgb mapColor[]={qRgb(120,20,0),qRgb(0,255,0),qRgb(255,0,0)};
 
 static const long numOfStatus=2;
 enum status{ dead,alive };
-static const long initStatusPossibility[]={80,20};
+static const long initStatusPossibility[]={90,10};
 static const bool isNeighborSurrounded=true;
-static const QRgb mapColor[]={qRgb(0,0,0),qRgb(255,255,255)};
+static const QRgb mapColor[]={qRgb(255,255,255),qRgb(0,0,0)};
 
 #endif
 // conwaysGameOfLife
@@ -59,26 +61,32 @@ static const QRgb mapColor[]={qRgb(0,0,0),qRgb(255,255,255)};
 
 static const long numOfStatus=2;
 enum status{ border,non_border };
-static const long initStatusPossibility[]={50,50};  // ignore this line
+static const long initStatusPossibility[]={50,50}; 
 static const bool isNeighborSurrounded=false; // von.Neumann's neighbor
 static const QRgb mapColor[]={qRgb(0,0,0),qRgb(255,255,255)};
 
 #endif 
 // edgeSmoothing
 
+#if modelName == cellularAutomaton1D
+
+static const long numOfStatus=2;
+enum status{ dead=0,alive=1 };
+static const long initStatusPossibility[]={50,50}; 
+static const bool isNeighborSurrounded=true;  // neighborhood radius=1
+static const QRgb mapColor[]={qRgb(255,255,255),qRgb(0,0,0)};
+#define advancedInterface  // use advanced interface of function evolveCell()
+
+#endif 
+// cellularAutomaton1D
+
+static std::map<QRgb,long> mapStatusId; 
+
 class Cell{
 public:
 	status stat;
 	Cell(){};
-	explicit Cell(QRgb p){
-		long i;
-		REP(i,numOfStatus){
-			if(mapColor[i]==p){
-				stat=(status)i;
-				return;
-			}
-		}
-	}
+	explicit Cell(QRgb p):stat((status)mapStatusId[p]){}
 };
 
 #endif

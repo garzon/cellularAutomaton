@@ -61,3 +61,29 @@
 
 #endif
 // edgeSmoothing
+
+#if modelName == cellularAutomaton1D
+
+	static const int elementaryCARules=124;
+
+	void evolveCell(QImage *image,long x,long y,long w,long h,long t,Cell &c){
+		static const int _rules=elementaryCARules;
+		long i,j,k;
+		t%=h;
+		if(t!=y) return;
+		Neighborhood n(*image,x,y);
+		auto p=n.neighborList.begin();
+		k=0;
+		REP(i,3){
+			k=k*2+int(p->stat);
+			p++;
+		}
+		if(k==2){
+			k=2;
+		};
+		k=(_rules>>k)&1;
+		c.stat=(status)k;
+	}
+
+#endif
+// cellularAutomaton1D

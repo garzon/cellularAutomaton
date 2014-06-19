@@ -187,9 +187,13 @@ void cellularAutomaton::step(){
 	REP(x,w){
 		REP(y,h){
 			Cell c(displayImage->pixel(x,y));
-			Neighborhood n(*displayImage,x,y);
-			sum+=n;
-			evolveCell(c,n);
+			sum+=c;
+			#ifdef advancedInterface
+				evolveCell(displayImage,x,y,w,h,_generation,c);
+			#else
+				Neighborhood n(*displayImage,x,y);
+				evolveCell(c,n);
+			#endif
 			image->setPixel(x,y,mapColor[c.stat]);
 		}
 	}
@@ -228,6 +232,10 @@ cellularAutomaton::cellularAutomaton(QWidget *parent)
 	srand(time(0));
 	_isLoaded=false;
 	_isAutoMode=false;
+	long i;
+	REP(i,numOfStatus){
+		mapStatusId[mapColor[(status)i]]=i;
+	}
 }
 
 cellularAutomaton::~cellularAutomaton()

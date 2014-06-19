@@ -9,9 +9,11 @@ using namespace std;
 
 class Neighborhood{
 public:
-	QVector<Cell> neighborList; map<status,long> stat;
+	QVector<Cell> neighborList;
+	map<status,long> stat;
 	explicit Neighborhood(const QImage &map,long x,long y);
 	Neighborhood();
+	Neighborhood & operator +=(Cell &n);
 	Neighborhood & operator +=(Neighborhood &n);
 private:
 	inline long prev(long x,long xmax,long xmin=0);

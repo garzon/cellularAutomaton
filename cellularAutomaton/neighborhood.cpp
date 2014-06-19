@@ -6,6 +6,11 @@ Neighborhood::Neighborhood(){
 		stat[(status)p]=0;
 }
 
+Neighborhood &  Neighborhood::operator +=(Cell &n){
+	++stat[n.stat];
+	return *this;
+}
+
 Neighborhood &  Neighborhood::operator +=(Neighborhood &n){
 	long p;
 	for(p=0;p<numOfStatus;p++)
@@ -15,16 +20,18 @@ Neighborhood &  Neighborhood::operator +=(Neighborhood &n){
 
 Neighborhood::Neighborhood(const QImage &map,long x,long y){
 	long w=map.width(),h=map.height();
+
+	if(isNeighborSurrounded) neighborList.push_back(Cell(map.pixel(prev(x,w),prev(y,h))));
+	neighborList.push_back(Cell(map.pixel(x,prev(y,h))));
+	if(isNeighborSurrounded) neighborList.push_back(Cell(map.pixel(next(x,w),prev(y,h))));
+
 	neighborList.push_back(Cell(map.pixel(prev(x,w),y)));
 	neighborList.push_back(Cell(map.pixel(next(x,w),y)));
-	neighborList.push_back(Cell(map.pixel(x,prev(y,h))));
+
+	if(isNeighborSurrounded) neighborList.push_back(Cell(map.pixel(prev(x,w),next(y,h))));
 	neighborList.push_back(Cell(map.pixel(x,next(y,h))));
-	if(isNeighborSurrounded){
-		neighborList.push_back(Cell(map.pixel(prev(x,w),prev(y,h))));
-		neighborList.push_back(Cell(map.pixel(prev(x,w),next(y,h))));
-		neighborList.push_back(Cell(map.pixel(next(x,w),prev(y,h))));
-		neighborList.push_back(Cell(map.pixel(next(x,w),next(y,h))));
-	}
+	if(isNeighborSurrounded) neighborList.push_back(Cell(map.pixel(next(x,w),next(y,h))));
+
 	long p;
 	for(p=0;p<numOfStatus;p++)
 		stat[(status)p]=0;
