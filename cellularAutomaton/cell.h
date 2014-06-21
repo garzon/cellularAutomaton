@@ -17,8 +17,9 @@
 #define oddOrEven 3
 #define edgeSmoothing 4
 #define cellularAutomaton1D 5
+#define spread 6
 
-#define modelName 5
+#define modelName 6
 
 // The macro modelName decides what model is going to run 
 
@@ -28,7 +29,7 @@
 
 static const long numOfStatus=3;
 enum status{ ground,tree,fire };
-static const long initStatusPossibility[]={80,20,0};
+static const long initStatusPossibility[]={33,33,34};
 static const bool isNeighborSurrounded=true;
 static const QRgb mapColor[]={qRgb(120,20,0),qRgb(0,255,0),qRgb(255,0,0)};
 
@@ -79,6 +80,17 @@ static const QRgb mapColor[]={qRgb(255,255,255),qRgb(0,0,0)};
 
 #endif 
 // cellularAutomaton1D
+
+#if modelName == spread
+
+static const long numOfStatus=2;
+enum status{ x,y };
+static const long initStatusPossibility[]={50,50}; 
+static const bool isNeighborSurrounded=true;
+static const QRgb mapColor[]={qRgb(100,100,255),qRgb(255,255,255)};
+
+#endif 
+// spread
 
 static std::map<QRgb,long> mapStatusId; 
 

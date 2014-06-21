@@ -3,28 +3,23 @@
 #if modelName == forestFire
 
 	static const long
-		burnup=20,
-		ground2tree=10,
-		tree2fire=1;
+		ground2tree=1000,
+		tree2fire=2;
 
 	void evolveCell(Cell &c,Neighborhood & n){
 		long i;
 		if(c.stat==fire){
-			if(n.stat[tree]==0) c.stat=ground; // Nothing to be burned and die out
+			c.stat=ground; // Nothing to be burned and die out
 			return;
 		}
 		if(c.stat==ground){
-			REP(i,n.stat[tree])
-				if(rand()%100<ground2tree) c.stat=tree; // seeds grow up
+			if(rand()%10000<ground2tree) c.stat=tree; // seeds grow up
 			return;
 		}
 		if(c.stat==tree){
-			if(rand()%100<tree2fire){   
-				c.stat=fire;            // the trees light up
-				return;
-			}
-			REP(i,n.stat[fire])
-				if(rand()%100<burnup) c.stat=fire; // the trees burn up
+			if(n.stat[fire]) c.stat=fire;
+			if(rand()%10000<tree2fire) c.stat=fire;
+			return;
 		}
 	}
 
@@ -87,3 +82,15 @@
 
 #endif
 // cellularAutomaton1D
+
+#if modelName == spread
+
+	void evolveCell(Cell &c,Neighborhood & n){
+		n.stat[c.stat]++;
+		long neighbor=n.stat[y];
+		if(neighbor>4){ c.stat=y; return; }
+		c.stat=x;
+	}
+
+#endif
+// spread
